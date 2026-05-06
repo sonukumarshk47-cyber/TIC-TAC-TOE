@@ -1,27 +1,48 @@
 public class TicTacToeGame {
+    // Assuming the board from UC1
+    private char[][] board = {
+        {'-', '-', '-'},
+        {'-', '-', '-'},
+        {'-', '-', '-'}
+    };
 
-    // Utility Method for conversion (Key Concept: Utility Methods)
-    public void convertSlotToIndices(int slot) {
-        // Step 1: Adjust for Zero-based Indexing (Key Concept: Zero-based Indexing)
-        // User enters 1-9, but arrays use 0-8
-        int adjustedSlot = slot - 1;
+    /**
+     * Validates if the move is legal (Key Concept: Defensive Programming)
+     * @param row The row index (0-2)
+     * @param col The column index (0-2)
+     * @return true if move is valid, false otherwise
+     */
+    public boolean validateMove(int row, int col) {
+        // 1. Boundary Checking (Key Requirement: Row and column must be 0-2)
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            System.out.println("Invalid move: Out of bounds!");
+            return false;
+        }
 
-        // Step 2: Use Division and Modulo (Key Concept: Division and Modulo)
-        // Row = index / grid_size
-        // Column = index % grid_size
-        int row = adjustedSlot / 3;
-        int col = adjustedSlot % 3;
+        // 2. Cell Occupancy Check (Key Requirement: Cell must be empty)
+        // Assuming '-' represents an empty cell as per UC1
+        if (board[row][col] != '-') {
+            System.out.println("Invalid move: Cell already occupied!");
+            return false;
+        }
 
-        // Output results (Key Requirement: Convert to valid indices)
-        System.out.println("Slot " + slot + " maps to: Row " + row + ", Column " + col);
+        // 3. Validation Performed -> Move Accepted
+        System.out.println("Move is valid.");
+        return true;
     }
 
     public static void main(String[] args) {
         TicTacToeGame game = new TicTacToeGame();
 
-        // Testing the mapping for a few slots
-        game.convertSlotToIndices(1); // Should be (0,0)
-        game.convertSlotToIndices(5); // Should be (1,1)
-        game.convertSlotToIndices(9); // Should be (2,2)
+        // Testing Flow of Execution:
+        // Case 1: Valid move
+        game.validateMove(0, 0);
+
+        // Case 2: Out of bounds
+        game.validateMove(3, 1);
+
+        // Case 3: Cell already occupied (Simulating a move)
+        game.board[1][1] = 'X';
+        game.validateMove(1, 1);
     }
 }
