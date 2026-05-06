@@ -1,38 +1,27 @@
-import java.util.Scanner;
-
 public class TicTacToeGame {
 
-    // Method to handle User Input (Key Concept: Method Creation)
-    public int getPlayerInput() {
-        Scanner scanner = new Scanner(System.in);
-        int slot;
+    // Utility Method for conversion (Key Concept: Utility Methods)
+    public void convertSlotToIndices(int slot) {
+        // Step 1: Adjust for Zero-based Indexing (Key Concept: Zero-based Indexing)
+        // User enters 1-9, but arrays use 0-8
+        int adjustedSlot = slot - 1;
 
-        while (true) {
-            System.out.print("Enter a slot number (1-9): ");
+        // Step 2: Use Division and Modulo (Key Concept: Division and Modulo)
+        // Row = index / grid_size
+        // Column = index % grid_size
+        int row = adjustedSlot / 3;
+        int col = adjustedSlot % 3;
 
-            // Check if the input is an integer (Key Requirement: Read integer input)
-            if (scanner.hasNextInt()) {
-                slot = scanner.nextInt();
-
-                // Validate the range (Key Requirement: Between 1 and 9)
-                if (slot >= 1 && slot <= 9) {
-                    return slot; // Return the slot value
-                } else {
-                    System.out.println("Invalid input. Please enter a number between 1 and 9.");
-                }
-            } else {
-                System.out.println("That's not a number! Please enter an integer.");
-                scanner.next(); // Clear the invalid input
-            }
-        }
+        // Output results (Key Requirement: Convert to valid indices)
+        System.out.println("Slot " + slot + " maps to: Row " + row + ", Column " + col);
     }
 
     public static void main(String[] args) {
         TicTacToeGame game = new TicTacToeGame();
 
-        // Flow: User enters slot -> program reads input -> control returns
-        int selectedSlot = game.getPlayerInput();
-
-        System.out.println("You selected slot: " + selectedSlot);
+        // Testing the mapping for a few slots
+        game.convertSlotToIndices(1); // Should be (0,0)
+        game.convertSlotToIndices(5); // Should be (1,1)
+        game.convertSlotToIndices(9); // Should be (2,2)
     }
 }
