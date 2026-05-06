@@ -1,5 +1,5 @@
 public class TicTacToeGame {
-    // Assuming the board from UC1
+    // Current board state (from UC1)
     private char[][] board = {
         {'-', '-', '-'},
         {'-', '-', '-'},
@@ -7,42 +7,38 @@ public class TicTacToeGame {
     };
 
     /**
-     * Validates if the move is legal (Key Concept: Defensive Programming)
-     * @param row The row index (0-2)
-     * @param col The column index (0-2)
-     * @return true if move is valid, false otherwise
+     * Updates the board state with the given symbol (Key Concept: State Update)
+     * @param row Validated row index
+     * @param col Validated column index
+     * @param symbol 'X' or 'O' based on the player
      */
-    public boolean validateMove(int row, int col) {
-        // 1. Boundary Checking (Key Requirement: Row and column must be 0-2)
-        if (row < 0 || row > 2 || col < 0 || col > 2) {
-            System.out.println("Invalid move: Out of bounds!");
-            return false;
-        }
+    public void placeMove(int row, int col, char symbol) {
+        // Key Requirement: Update board correctly
+        // Key Concept: Array Indexing
+        board[row][col] = symbol;
 
-        // 2. Cell Occupancy Check (Key Requirement: Cell must be empty)
-        // Assuming '-' represents an empty cell as per UC1
-        if (board[row][col] != '-') {
-            System.out.println("Invalid move: Cell already occupied!");
-            return false;
-        }
+        System.out.println("Placed '" + symbol + "' at (" + row + ", " + col + ")");
+    }
 
-        // 3. Validation Performed -> Move Accepted
-        System.out.println("Move is valid.");
-        return true;
+    // Helper method to see the updated board (Reusable Method)
+    public void displayBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
         TicTacToeGame game = new TicTacToeGame();
 
-        // Testing Flow of Execution:
-        // Case 1: Valid move
-        game.validateMove(0, 0);
+        // Flow: Valid move -> symbol placed -> board updated
+        int row = 1; // Result from UC4 mapping
+        int col = 1; // Result from UC4 mapping
+        char playerSymbol = 'X'; // Result from UC2 toss
 
-        // Case 2: Out of bounds
-        game.validateMove(3, 1);
-
-        // Case 3: Cell already occupied (Simulating a move)
-        game.board[1][1] = 'X';
-        game.validateMove(1, 1);
+        game.placeMove(row, col, playerSymbol);
+        game.displayBoard();
     }
 }
