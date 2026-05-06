@@ -1,34 +1,30 @@
 public class TicTacToeGame {
+    // Standard empty cell placeholder from UC1
     private char[][] board = new char[3][3];
 
     /**
-     * Checks if there is a winner on the board.
-     * @param symbol The player's symbol ('X' or 'O')
-     * @return true if the player with that symbol has won.
+     * Checks if the game is a draw.
+     * (Key Concept: Boolean Flags & Loop Traversal)
+     * @return true if the board is full and there are no empty cells.
      */
-    public boolean checkWinner(char symbol) {
-        // 1. Loop-Based Checks for Rows and Columns
+    public boolean isDraw() {
+        // We use a boolean flag to track if we find an empty cell
+        boolean foundEmptyCell = false;
+
+        // 1. Loop Traversal: Check every cell in the 2D array
         for (int i = 0; i < 3; i++) {
-            // Check Row i
-            if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) {
-                return true;
+            for (int j = 0; j < 3; j++) {
+                // If even one cell contains the placeholder '-', the board isn't full
+                if (board[i][j] == '-') {
+                    foundEmptyCell = true;
+                    break; // Optimization: stop looking if we find one empty spot
+                }
             }
-            // Check Column i
-            if (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol) {
-                return true;
-            }
+            if (foundEmptyCell) break;
         }
 
-        // 2. Logical Conditions for Diagonals
-        // Main diagonal (top-left to bottom-right)
-        if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) {
-            return true;
-        }
-        // Anti-diagonal (top-right to bottom-left)
-        if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) {
-            return true;
-        }
-
-        return false; // No winner found
+        // 2. Draw Declared: If no empty cell was found, it's a draw
+        // (Assuming you call this ONLY after checking for a winner first)
+        return !foundEmptyCell;
     }
 }
