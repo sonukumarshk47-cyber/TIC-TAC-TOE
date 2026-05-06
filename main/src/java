@@ -1,0 +1,26 @@
+public class TicTacToeBoard {
+    public static void main(String[] args) {
+        // 1. 2D Array Representation
+        // We define a 3x3 grid
+        char[][] board = new char[3][3];
+
+        // 2. Initialization Logic
+        // Nested loops: Outer loop for rows (i), Inner loop for columns (j)
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = '-'; // Initializing each cell with a placeholder
+            }
+        }
+
+        // 3. Displaying the Board
+        System.out.println("Empty Tic-Tac-Toe Board:");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Print the character followed by a space for readability
+                System.out.print(board[i][j] + " ");
+            }
+            // Move to the next line after finishing a row
+            System.out.println();
+        }
+    }
+}
