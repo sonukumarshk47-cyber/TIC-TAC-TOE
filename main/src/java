@@ -1,44 +1,34 @@
 public class TicTacToeGame {
-    private boolean gameRunning = true; // Key Concept: Game State Flag
-    private String currentPlayer = "User"; // Starting player
+    private char[][] board = new char[3][3];
 
-    public void playGame() {
-        // Key Concept: While Loop (continues until win or draw is detected)
-        while (gameRunning) {
-            System.out.println("\n--- " + currentPlayer + "'s Turn ---");
-
-            // 1. Player Move (UC3/UC7 logic would be called here)
-            processMove();
-
-            // 2. Check Win/Draw (Key Requirement: Stop loop on win or draw)
-            if (checkForWinOrDraw()) {
-                gameRunning = false; // Updates flag to stop the loop
-                System.out.println("Game Over!");
-            } else {
-                // 3. Switch Turn (Key Requirement: Alternate turns)
-                switchTurn();
+    /**
+     * Checks if there is a winner on the board.
+     * @param symbol The player's symbol ('X' or 'O')
+     * @return true if the player with that symbol has won.
+     */
+    public boolean checkWinner(char symbol) {
+        // 1. Loop-Based Checks for Rows and Columns
+        for (int i = 0; i < 3; i++) {
+            // Check Row i
+            if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) {
+                return true;
+            }
+            // Check Column i
+            if (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol) {
+                return true;
             }
         }
-    }
 
-    private void processMove() {
-        // Logic to accept input and place mark on board
-        System.out.println(currentPlayer + " made a move.");
-    }
+        // 2. Logical Conditions for Diagonals
+        // Main diagonal (top-left to bottom-right)
+        if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) {
+            return true;
+        }
+        // Anti-diagonal (top-right to bottom-left)
+        if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) {
+            return true;
+        }
 
-    private void switchTurn() {
-        // Key Concept: Turn Switching
-        currentPlayer = (currentPlayer.equals("User")) ? "Computer" : "User";
-    }
-
-    private boolean checkForWinOrDraw() {
-        // Placeholder for win/draw detection logic
-        // Return true if game should end, false to continue
-        return false;
-    }
-
-    public static void main(String[] args) {
-        TicTacToeGame game = new TicTacToeGame();
-        game.playGame();
+        return false; // No winner found
     }
 }
