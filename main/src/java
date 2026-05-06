@@ -1,53 +1,44 @@
-import java.util.Random;
-
 public class TicTacToeGame {
-    private char[][] board = {
-        {'-', '-', '-'},
-        {'-', '-', '-'},
-        {'-', '-', '-'}
-    };
+    private boolean gameRunning = true; // Key Concept: Game State Flag
+    private String currentPlayer = "User"; // Starting player
 
-    // UC7: Computer Player Logic
-    public void computerMakesMove(char computerSymbol) {
-        Random random = new Random();
-        boolean movePlaced = false;
+    public void playGame() {
+        // Key Concept: While Loop (continues until win or draw is detected)
+        while (gameRunning) {
+            System.out.println("\n--- " + currentPlayer + "'s Turn ---");
 
-        System.out.println("Computer's turn...");
+            // 1. Player Move (UC3/UC7 logic would be called here)
+            processMove();
 
-        // Key Concept: Loop Until Valid
-        while (!movePlaced) {
-            // Key Requirement: Generate slot 1-9
-            int slot = random.nextInt(9) + 1;
-
-            // Key Concept: Logic Reuse (Reusing UC4 conversion)
-            int row = (slot - 1) / 3;
-            int col = (slot - 1) % 3;
-
-            // Key Requirement: Ensure move validity (Reusing UC5 logic)
-            if (board[row][col] == '-') {
-                board[row][col] = computerSymbol;
-                System.out.println("Computer placed " + computerSymbol + " in slot " + slot);
-                movePlaced = true; // Exit loop
+            // 2. Check Win/Draw (Key Requirement: Stop loop on win or draw)
+            if (checkForWinOrDraw()) {
+                gameRunning = false; // Updates flag to stop the loop
+                System.out.println("Game Over!");
+            } else {
+                // 3. Switch Turn (Key Requirement: Alternate turns)
+                switchTurn();
             }
-            // If the cell wasn't '-', the loop runs again to find a new random slot
         }
     }
 
-    // Helper to see the board
-    public void displayBoard() {
-        for (char[] row : board) {
-            for (char cell : row) {
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
+    private void processMove() {
+        // Logic to accept input and place mark on board
+        System.out.println(currentPlayer + " made a move.");
+    }
+
+    private void switchTurn() {
+        // Key Concept: Turn Switching
+        currentPlayer = (currentPlayer.equals("User")) ? "Computer" : "User";
+    }
+
+    private boolean checkForWinOrDraw() {
+        // Placeholder for win/draw detection logic
+        // Return true if game should end, false to continue
+        return false;
     }
 
     public static void main(String[] args) {
         TicTacToeGame game = new TicTacToeGame();
-
-        // Simulating the flow
-        game.computerMakesMove('O');
-        game.displayBoard();
+        game.playGame();
     }
 }
